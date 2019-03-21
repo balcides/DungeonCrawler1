@@ -12,9 +12,11 @@ public class Mob : MonoBehaviour {
 	public AnimationClip run;
 	public AnimationClip idle;
 
+	public int health;
+
 	// Use this for initialization
 	void Start () {
-		
+		health = 100;
 	}
 	
 	// Update is called once per frame
@@ -26,6 +28,7 @@ public class Mob : MonoBehaviour {
 			GetComponent<Animation> ().CrossFade (idle.name);
 		}
 
+		Debug.Log (health);
 	}
 
 	bool inRange(){
@@ -39,6 +42,17 @@ public class Mob : MonoBehaviour {
 		transform.LookAt (player.position);
 		controller.SimpleMove (transform.forward * speed);
 		GetComponent<Animation> ().CrossFade(run.name);
+	}
+
+
+	public void getHit(int damage){
+
+		health = health - damage;
+		if (health < 0) {
+
+			health = 0;
+		}
+
 	}
 
 	void OnMouseOver(){

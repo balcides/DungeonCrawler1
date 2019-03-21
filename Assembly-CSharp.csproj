@@ -59,6 +59,8 @@
      <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Util.cs" />
      <Compile Include="Assets\ProCore\ProGrids\MonoBehaviour\pg_IgnoreSnap.cs" />
      <Compile Include="Assets\Scripts\ClickToMove.cs" />
+     <Compile Include="Assets\Scripts\Fighter.cs" />
+     <Compile Include="Assets\Scripts\Mob.cs" />
      <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />
      <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />
      <None Include="Assets\SkeletonData\animations.txt" />

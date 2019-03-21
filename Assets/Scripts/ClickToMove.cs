@@ -7,6 +7,9 @@ public class ClickToMove : MonoBehaviour {
 	public float speed;
 	public CharacterController controller;
 
+	public AnimationClip run;
+	public AnimationClip idle;
+
 	private Vector3 position; 
 
 	// Use this for initialization
@@ -35,14 +38,13 @@ public class ClickToMove : MonoBehaviour {
 
 		if (Physics.Raycast (ray, out hit, 1000)) {
 			position = new Vector3 (hit.point.x, hit.point.y, hit.point.z);
-			Debug.Log (position);
 		}
 	}
 
 	void moveToPosition(){
 
-		//stop running if distance less than on in transform
-		if(Vector3.Distance(transform.position, position) > 1){
+		//Game object is moving
+		if (Vector3.Distance (transform.position, position) > 1) {
 			
 			Quaternion newRotation = Quaternion.LookRotation (position - transform.position);
 
@@ -51,6 +53,13 @@ public class ClickToMove : MonoBehaviour {
 
 			transform.rotation = Quaternion.Slerp (transform.rotation, newRotation, Time.deltaTime * 10);
 			controller.SimpleMove (transform.forward * speed);
+
+			GetComponent<Animation> ().CrossFade(run.name);
+
+		//Game object is not moving
+		} else {
+
+			GetComponent<Animation> ().CrossFade (idle.name);
 		}
 	}
 }

@@ -8,55 +8,93 @@ public class Mob : MonoBehaviour {
 	public float range;
 	public Transform player;
 	public CharacterController controller;
-
+	public AnimationClip die;
 	public AnimationClip run;
 	public AnimationClip idle;
-
 	public int health;
+
+	Animation animations;
+
+	void Awake(){
+		animations = GetComponent<Animation> ();
+
+	}
+
 
 	// Use this for initialization
 	void Start () {
 		health = 100;
+
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
-
-		if (!inRange ()) {
-			chase ();
-		} else {
-			GetComponent<Animation> ().CrossFade (idle.name);
-		}
-
 		Debug.Log (health);
+
+		if (!isDead ()) {
+			if (!inRange ()) {
+				chase ();
+
+			} else {
+				animations.CrossFade (idle.name);
+
+			}
+		} else {
+			dieMethod ();
+
+		}
 	}
+
 
 	bool inRange(){
-
 		if (Vector3.Distance (transform.position, player.position) < range) { return true;
 		} else { return false; }
+
 	}
 
+
 	void chase(){
-		
 		transform.LookAt (player.position);
 		controller.SimpleMove (transform.forward * speed);
-		GetComponent<Animation> ().CrossFade(run.name);
+		animations.CrossFade(run.name);
+
+	}
+
+
+	void  dieMethod(){
+		animations = GetComponent<Animation> ();
+		animations.Play (die.name);
+		if (animations[die.name].time > animations [die.name].length * 0.9) {
+			Destroy (gameObject);
+
+		}
 	}
 
 
 	public void getHit(int damage){
-
 		health = health - damage;
 		if (health < 0) {
-
 			health = 0;
+
 		}
 
 	}
 
-	void OnMouseOver(){
 
+	bool isDead(){
+		if (health <= 0) {
+			return true;
+
+		} else {
+			return false;
+
+		}
+	}
+
+
+	void OnMouseOver(){
 		player.GetComponent<Fighter> ().opponent = gameObject;
+
 	}
 }

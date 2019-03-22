@@ -7,11 +7,20 @@ public class Mob : MonoBehaviour {
 	public float speed;
 	public float range;
 	public Transform player;
+	private Fighter opponent;
+
 	public CharacterController controller;
 	public AnimationClip die;
 	public AnimationClip run;
 	public AnimationClip idle;
+	public AnimationClip attackClip;
+
+	public double impactTime = 0.35f; //unify this later
+
 	public int health;
+	public int damage;
+
+	private bool impacted;
 
 	Animation animations;
 
@@ -23,21 +32,26 @@ public class Mob : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		health = 100;
 
+		opponent = player.GetComponent<Fighter> ();
 	}
 
 
 	// Update is called once per frame
 	void Update () {
-		Debug.Log (health);
-
 		if (!isDead ()) {
 			if (!inRange ()) {
 				chase ();
 
 			} else {
-				animations.CrossFade (idle.name);
+				animations.Play(attackClip.name);
+				attack ();
+
+				//TODO: centralize this function
+				if (animations [attackClip.name].time > (0.9f * animations [attackClip.name].length)) {
+					impacted = false;
+
+				}
 
 			}
 		} else {
@@ -46,6 +60,17 @@ public class Mob : MonoBehaviour {
 		}
 	}
 
+	void attack(){
+
+		//TODO: later make this a centralized function
+		if (animations [attackClip.name].time > (animations [attackClip.name].length * impactTime) && 
+			!impacted && animations[attackClip.name].time < 0.9 * animations[attackClip.name].length) {
+			opponent.getHit (damage);
+			impacted = true;
+
+		}
+
+	}
 
 	bool inRange(){
 		if (Vector3.Distance (transform.position, player.position) < range) { return true;
@@ -63,7 +88,6 @@ public class Mob : MonoBehaviour {
 
 
 	void  dieMethod(){
-		animations = GetComponent<Animation> ();
 		animations.Play (die.name);
 		if (animations[die.name].time > animations [die.name].length * 0.9) {
 			Destroy (gameObject);

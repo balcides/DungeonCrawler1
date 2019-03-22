@@ -10,12 +10,17 @@ public class Fighter : MonoBehaviour {
 
 	public int health;
 	public int damage;
-	public double impactLength;
+
+	private double impactLength;
+	public double impactTime;
 	public bool impacted;
 	public float range;
 
 	bool started;
 	bool ended;
+
+	public float combatEscapeTime = 10;
+	public float countDown;
 
 	Animation animations;
 
@@ -28,7 +33,7 @@ public class Fighter : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		impactLength = (animations [attack.name].length * impactTime);
 	}
 
 

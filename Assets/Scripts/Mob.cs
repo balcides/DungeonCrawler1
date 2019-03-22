@@ -17,6 +17,7 @@ public class Mob : MonoBehaviour {
 
 	public double impactTime = 0.35f; //unify this later
 
+	public int maxHealth;
 	public int health;
 	public int damage;
 
@@ -33,6 +34,7 @@ public class Mob : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		health = maxHealth;
 		opponent = player.GetComponent<Fighter> ();
 	}
 

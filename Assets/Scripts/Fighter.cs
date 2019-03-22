@@ -14,6 +14,9 @@ public class Fighter : MonoBehaviour {
 	public bool impacted;
 	public float range;
 
+	bool started;
+	bool ended;
+
 	Animation animations;
 
 
@@ -68,16 +71,33 @@ public class Fighter : MonoBehaviour {
 	public bool isDead(){
 		if (health == 0) {
 			return true;
+
 		} else {
 			return false;
+
 		}
 
 	}
 
 
 	void die(){
-		if (isDead()) {
-			animations.Play (dieClip.name);
+		if (isDead() && !ended) {
+			if (!started) {
+				ClickToMove.die = true;
+				animations.Play (dieClip.name);
+				started = true;
+
+			}
+
+			if (started && !animations.IsPlaying(dieClip.name)){
+				//whatever you want to do
+				Debug.Log("You have died");
+				health = 100;
+
+				ended = true;
+				started = false;
+				ClickToMove.die = false;
+			}
 
 		}
 	}

@@ -10,6 +10,7 @@ public class ClickToMove : MonoBehaviour {
 	public AnimationClip idle;
 	private Vector3 position; 
 	public static bool attack;
+	public static bool die;
 
 	// Use this for initialization
 	void Start () {
@@ -19,7 +20,8 @@ public class ClickToMove : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (!attack) {
+		if (!attack && !die) {
+			
 			//click to move
 			if (Input.GetMouseButton (0)) {
 				

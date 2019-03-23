@@ -53,7 +53,7 @@ public class Fighter : MonoBehaviour {
 		}
 
 		if (inAction) {
-			if (attackFunction (0, 1, KeyCode.Space, null)) {
+			if (attackFunction (0, 1, KeyCode.Space, null, 0)) {
 				
 			} else {
 				inAction = false;
@@ -64,7 +64,7 @@ public class Fighter : MonoBehaviour {
 	}
 
 
-	public bool attackFunction(int stunSeconds, double scaledDamage, KeyCode key, GameObject particleEffect){
+	public bool attackFunction(int stunSeconds, double scaledDamage, KeyCode key, GameObject particleEffect, int projectile){
 
 		if (Input.GetKey (key) && inRange()) {
 			animations.CrossFade (attack.name);
@@ -86,7 +86,7 @@ public class Fighter : MonoBehaviour {
 			return false;
 
 		}
-		impact (stunSeconds, scaledDamage, particleEffect);
+		impact (stunSeconds, scaledDamage, particleEffect, projectile);
 		return true;
 	}
 
@@ -100,7 +100,7 @@ public class Fighter : MonoBehaviour {
 	}
 
 
-	void impact(int stunSeconds, double scaledDamage, GameObject particleEffect){
+	void impact(int stunSeconds, double scaledDamage, GameObject particleEffect, int projectile){
 		if (opponent != null && animations.IsPlaying (attack.name) && !impacted) {
 			if(animations[attack.name].time > animations[attack.name].length * impactLength &&
 				(animations[attack.name].time < 0.9 * animations[attack.name].length)){
@@ -109,6 +109,17 @@ public class Fighter : MonoBehaviour {
 				InvokeRepeating ("combatEscapeCountDown", 0, 1);
 				opponent.GetComponent<Mob> ().getHit (damage * scaledDamage);
 				opponent.GetComponent<Mob> ().getStun (stunSeconds);
+
+				//send out spheres
+				if (projectile > 0) {
+					//shoot projectiles
+					Debug.Log (transform.rotation);
+					Instantiate(Resources.Load("Projectile"), transform.position, transform.rotation);
+		
+
+				}
+
+				//send particles
 				if (particleEffect != null) {
 					Instantiate (particleEffect, new Vector3 (opponent.transform.position.x, opponent.transform.position.y + 1.5f, opponent.transform.position.z), Quaternion.identity);
 				}

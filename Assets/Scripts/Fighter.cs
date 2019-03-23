@@ -45,16 +45,16 @@ public class Fighter : MonoBehaviour {
 	void Update () {
 
 		if (!specialAttack) {
-		}
+			attackFunction (0, 1, KeyCode.Space);
 
-		attackFunction ();
+		}
 		die ();
 	}
 
 
-	public void attackFunction(){
+	public void attackFunction(int stunSeconds, double scaledDamage, KeyCode key){
 
-		if (Input.GetKey (KeyCode.Space) && inRange()) {
+		if (Input.GetKey (key) && inRange()) {
 			animations.CrossFade (attack.name);
 			ClickToMove.attack = true;
 			if (opponent != null) {
@@ -66,9 +66,12 @@ public class Fighter : MonoBehaviour {
 		if (animations[attack.name].time > 0.9 * animations[attack.name].length) {
 			ClickToMove.attack = false;
 			impacted = false;
+			if (specialAttack) {
+				specialAttack = false;
+			}
 
 		}
-		impact ();
+		impact (stunSeconds, scaledDamage);
 		
 	}
 
@@ -82,14 +85,15 @@ public class Fighter : MonoBehaviour {
 	}
 
 
-	void impact(){
+	void impact(int stunSeconds, double scaledDamage){
 		if (opponent != null && animations.IsPlaying (attack.name) && !impacted) {
 			if(animations[attack.name].time > animations[attack.name].length * impactLength &&
 				(animations[attack.name].time < 0.9 * animations[attack.name].length)){
 				countDown = combatEscapeTime;
 				CancelInvoke ("combatEscapeCountDown");
 				InvokeRepeating ("combatEscapeCountDown", 0, 1);
-				opponent.GetComponent<Mob> ().getHit (damage);
+				opponent.GetComponent<Mob> ().getHit (damage * scaledDamage);
+				opponent.GetComponent<Mob> ().getStun (stunSeconds);
 				impacted = true;
 
 			}

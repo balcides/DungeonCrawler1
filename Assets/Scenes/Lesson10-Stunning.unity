@@ -201,9 +201,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5862bcca904f341649aa4299e4ec4b2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 94889992}
   key: 49
-  damagePercentage: 1.5
-  stunTime: 4
+  damagePercentage: 1
+  stunTime: 5
 --- !u!1 &186452785
 GameObject:
   m_ObjectHideFlags: 0

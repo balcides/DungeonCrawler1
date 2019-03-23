@@ -107,8 +107,8 @@ public class Mob : MonoBehaviour {
 	}
 
 
-	public void getHit(int damage){
-		health = health - damage;
+	public void getHit(double damage){
+		health = health - (int)damage;
 		if (health < 0) {
 			health = 0;
 

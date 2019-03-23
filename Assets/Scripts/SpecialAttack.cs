@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class SpecialAttack : MonoBehaviour {
 
-	Fighter player;
+	public Fighter player;
 	public KeyCode key;
 	public double damagePercentage;
 	public int stunTime;
-	public bool inAction;
 
 	// Use this for initialization
 	void Start () {
@@ -21,12 +20,10 @@ public class SpecialAttack : MonoBehaviour {
 		if (Input.GetKeyDown (key)) {
 			player.resetAttackFunction ();
 			player.specialAttack = true;
-			inAction = true;
 		}
+			
+		player.attackFunction (stunTime, damagePercentage, key);
 
-		if (inAction) {
-			player.attackFunction ();
 
-		}
 	}
 }

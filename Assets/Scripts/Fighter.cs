@@ -8,6 +8,7 @@ public class Fighter : MonoBehaviour {
 	public AnimationClip attack;
 	public AnimationClip dieClip;
 
+	public int maxHealth;
 	public int health;
 	public int damage;
 
@@ -34,6 +35,7 @@ public class Fighter : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		impactLength = (animations [attack.name].length * impactTime);
+		health = maxHealth;
 	}
 
 

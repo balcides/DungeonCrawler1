@@ -7,6 +7,7 @@ public class Mob : MonoBehaviour {
 	public float speed;
 	public float range;
 	public Transform player;
+	public LevelSystem playerLevel;
 	private Fighter opponent;
 
 	public CharacterController controller;
@@ -92,6 +93,7 @@ public class Mob : MonoBehaviour {
 	void  dieMethod(){
 		animations.Play (die.name);
 		if (animations[die.name].time > animations [die.name].length * 0.9) {
+			playerLevel.exp = playerLevel.exp + 100;
 			Destroy (gameObject);
 
 		}

@@ -61,6 +61,7 @@
      <Compile Include="Assets\Scripts\ClickToMove.cs" />
      <Compile Include="Assets\Scripts\EnemyHealth.cs" />
      <Compile Include="Assets\Scripts\Fighter.cs" />
+     <Compile Include="Assets\Scripts\LevelSystem.cs" />
      <Compile Include="Assets\Scripts\Mob.cs" />
      <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />
      <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />

@@ -23,6 +23,8 @@ public class Fighter : MonoBehaviour {
 	public float combatEscapeTime;
 	public float countDown;
 
+	public bool specialAttack;
+
 	Animation animations;
 
 
@@ -42,7 +44,15 @@ public class Fighter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		Debug.Log (health);
+		if (!specialAttack) {
+		}
+
+		attackFunction ();
+		die ();
+	}
+
+
+	public void attackFunction(){
 
 		if (Input.GetKey (KeyCode.Space) && inRange()) {
 			animations.CrossFade (attack.name);
@@ -59,7 +69,16 @@ public class Fighter : MonoBehaviour {
 
 		}
 		impact ();
-		die ();
+		
+	}
+
+
+	public void resetAttackFunction(){
+
+		ClickToMove.attack = false;
+		impacted = false;
+		animations.Stop (attack.name);
+		
 	}
 
 
@@ -133,6 +152,7 @@ public class Fighter : MonoBehaviour {
 
 		}
 	}
+		
 
 	bool inRange(){
 		if (Vector3.Distance (opponent.transform.position, transform.position) <= range) {

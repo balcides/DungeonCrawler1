@@ -23,6 +23,7 @@ public class Mob : MonoBehaviour {
 	public int damage;
 
 	private bool impacted;
+	private float stunTime;
 
 	Animation animations;
 
@@ -42,20 +43,26 @@ public class Mob : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+
 		if (!isDead ()) {
-			if (!inRange ()) {
-				chase ();
+			
+			if (stunTime <= 0) {
+				
+				if (!inRange ()) {
+					chase ();
 
-			} else {
-				animations.Play(attackClip.name);
-				attack ();
+				} else {
+					animations.Play (attackClip.name);
+					attack ();
 
-				//TODO: centralize this function
-				if (animations [attackClip.name].time > (0.9f * animations [attackClip.name].length)) {
-					impacted = false;
+					//TODO: centralize this function
+					if (animations [attackClip.name].time > (0.9f * animations [attackClip.name].length)) {
+						impacted = false;
 
+					}
 				}
-
+			} else {
+				//do nothing
 			}
 		} else {
 			dieMethod ();
@@ -109,6 +116,20 @@ public class Mob : MonoBehaviour {
 
 	}
 
+	public void getStun(int seconds){
+		stunTime = seconds;
+		InvokeRepeating ("stunCountDown", 0f, 1f);
+	}
+
+	void stunCountDown(){
+		stunTime = stunTime - 1;
+		Debug.Log (stunTime);
+		if (stunTime <= 0) {
+			CancelInvoke("stunCountDown");
+
+		}
+
+	}
 
 	bool isDead(){
 		if (health <= 0) {

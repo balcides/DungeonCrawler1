@@ -35,7 +35,7 @@ public class LevelSystem : MonoBehaviour {
 
 	void levelEffect(){
 		player.maxHealth = player.maxHealth + 100;
-		player.damage = player.damage + (Mathf.Pow(level,2) + 100);
+		player.damage = player.damage + (int)(Mathf.Pow(level,2) + 100);
 		player.health = player.maxHealth;
 	}
 

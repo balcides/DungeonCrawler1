@@ -19,7 +19,7 @@ public class Fighter : MonoBehaviour {
 	bool started;
 	bool ended;
 
-	public float combatEscapeTime = 10;
+	public float combatEscapeTime;
 	public float countDown;
 
 	Animation animations;
@@ -65,12 +65,26 @@ public class Fighter : MonoBehaviour {
 		if (opponent != null && animations.IsPlaying (attack.name) && !impacted) {
 			if(animations[attack.name].time > animations[attack.name].length * impactLength &&
 				(animations[attack.name].time < 0.9 * animations[attack.name].length)){
+				countDown = combatEscapeTime;
+				CancelInvoke ("combatEscapeCountDown");
+				InvokeRepeating ("combatEscapeCountDown", 0, 1);
 				opponent.GetComponent<Mob> ().getHit (damage);
 				impacted = true;
 
 			}
 		}
 	}
+
+
+	void combatEscapeCountDown(){
+
+		countDown = countDown - 1;
+		if(countDown == 0){
+			CancelInvoke ("combatEscapeCountDown");
+
+		}
+	}
+
 
 	//if dead returns true or false
 	public bool isDead(){

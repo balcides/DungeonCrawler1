@@ -169,9 +169,11 @@ MonoBehaviour:
   dieClip: {fileID: 7400010, guid: 86c591ebd74142c4d93243d9fa9544da, type: 3}
   health: 100
   damage: 40
-  impactLength: 0
+  impactTime: 0.35
   impacted: 0
   range: 1.25
+  combatEscapeTime: 5
+  countDown: 5
 --- !u!1 &186452785
 GameObject:
   m_ObjectHideFlags: 0

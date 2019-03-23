@@ -8,6 +8,8 @@ public class SpecialAttack : MonoBehaviour {
 	public KeyCode key;
 	public double damagePercentage;
 	public int stunTime;
+	public bool inAction;
+	public GameObject particleEffect;
 
 	// Use this for initialization
 	void Start () {
@@ -17,12 +19,22 @@ public class SpecialAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (Input.GetKeyDown (key)) {
+		if (Input.GetKeyDown (key) && !player.specialAttack) {
 			player.resetAttackFunction ();
 			player.specialAttack = true;
+			inAction = true;
+
 		}
-			
-		player.attackFunction (stunTime, damagePercentage, key);
+
+		if (inAction) {
+			if (player.attackFunction (stunTime, damagePercentage, key, particleEffect)) {
+
+
+			} else {
+				inAction = false;
+
+			}
+		}
 
 
 	}

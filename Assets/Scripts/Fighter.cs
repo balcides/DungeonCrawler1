@@ -16,6 +16,7 @@ public class Fighter : MonoBehaviour {
 	public double impactTime;
 	public bool impacted;
 	public float range;
+	public bool inAction;
 
 	bool started;
 	bool ended;
@@ -44,15 +45,26 @@ public class Fighter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (!specialAttack) {
-			attackFunction (0, 1, KeyCode.Space);
 
+
+		if (Input.GetKeyDown (KeyCode.Space) && !specialAttack) {
+			inAction = true;
+
+		}
+
+		if (inAction) {
+			if (attackFunction (0, 1, KeyCode.Space, null)) {
+				
+			} else {
+				inAction = false;
+
+			}
 		}
 		die ();
 	}
 
 
-	public void attackFunction(int stunSeconds, double scaledDamage, KeyCode key){
+	public bool attackFunction(int stunSeconds, double scaledDamage, KeyCode key, GameObject particleEffect){
 
 		if (Input.GetKey (key) && inRange()) {
 			animations.CrossFade (attack.name);
@@ -66,13 +78,16 @@ public class Fighter : MonoBehaviour {
 		if (animations[attack.name].time > 0.9 * animations[attack.name].length) {
 			ClickToMove.attack = false;
 			impacted = false;
+
 			if (specialAttack) {
 				specialAttack = false;
 			}
 
+			return false;
+
 		}
-		impact (stunSeconds, scaledDamage);
-		
+		impact (stunSeconds, scaledDamage, particleEffect);
+		return true;
 	}
 
 
@@ -85,7 +100,7 @@ public class Fighter : MonoBehaviour {
 	}
 
 
-	void impact(int stunSeconds, double scaledDamage){
+	void impact(int stunSeconds, double scaledDamage, GameObject particleEffect){
 		if (opponent != null && animations.IsPlaying (attack.name) && !impacted) {
 			if(animations[attack.name].time > animations[attack.name].length * impactLength &&
 				(animations[attack.name].time < 0.9 * animations[attack.name].length)){
@@ -94,6 +109,9 @@ public class Fighter : MonoBehaviour {
 				InvokeRepeating ("combatEscapeCountDown", 0, 1);
 				opponent.GetComponent<Mob> ().getHit (damage * scaledDamage);
 				opponent.GetComponent<Mob> ().getStun (stunSeconds);
+				if (particleEffect != null) {
+					Instantiate (particleEffect, new Vector3 (opponent.transform.position.x, opponent.transform.position.y + 1.5f, opponent.transform.position.z), Quaternion.identity);
+				}
 				impacted = true;
 
 			}

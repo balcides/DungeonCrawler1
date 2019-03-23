@@ -187,6 +187,7 @@ MonoBehaviour:
   impactTime: 0.35
   impacted: 0
   range: 1.25
+  inAction: 0
   combatEscapeTime: 5
   countDown: 5
   specialAttack: 0
@@ -203,8 +204,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 94889992}
   key: 49
-  damagePercentage: 1
-  stunTime: 5
+  damagePercentage: 2
+  stunTime: 8
+  inAction: 0
+  particleEffect: {fileID: 100002, guid: 93a60ba8e409947b1a0334537c8b38c8, type: 2}
+--- !u!114 &94889994
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 94889987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5862bcca904f341649aa4299e4ec4b2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 94889992}
+  key: 50
+  damagePercentage: 0
+  stunTime: 4
+  inAction: 0
+  particleEffect: {fileID: 100002, guid: 93a60ba8e409947b1a0334537c8b38c8, type: 2}
 --- !u!1 &186452785
 GameObject:
   m_ObjectHideFlags: 0

@@ -70,6 +70,7 @@ public class Mob : MonoBehaviour {
 		}
 	}
 
+
 	void attack(){
 
 		//TODO: later make this a centralized function
@@ -81,6 +82,7 @@ public class Mob : MonoBehaviour {
 		}
 
 	}
+
 
 	bool inRange(){
 		if (Vector3.Distance (transform.position, player.position) < range) { return true;
@@ -116,10 +118,14 @@ public class Mob : MonoBehaviour {
 
 	}
 
+
 	public void getStun(int seconds){
+		CancelInvoke ("stunCountDown");
 		stunTime = seconds;
 		InvokeRepeating ("stunCountDown", 0f, 1f);
+
 	}
+
 
 	void stunCountDown(){
 		stunTime = stunTime - 1;
@@ -130,6 +136,7 @@ public class Mob : MonoBehaviour {
 		}
 
 	}
+
 
 	bool isDead(){
 		if (health <= 0) {

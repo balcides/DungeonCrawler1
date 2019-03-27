@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpecialAttack : MonoBehaviour {
 
 	public Fighter player;
+	public Texture2D picture;
 	public KeyCode key;
 	public double damagePercentage;
 	public int stunTime;

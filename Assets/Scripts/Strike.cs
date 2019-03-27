@@ -5,6 +5,7 @@ using UnityEngine;
 public class Strike : MonoBehaviour {
 
 	public float speed;
+	public float damage;
 
 	// Use this for initialization
 	void Start () {
@@ -15,5 +16,13 @@ public class Strike : MonoBehaviour {
 	void Update () {
 		transform.Translate (Vector3.forward * speed * Time.deltaTime);
 		
+	}
+
+	void OnTriggerEnter(Collider other){
+
+		if (other.tag == "Enemy") {
+			Debug.Log ("Hit");
+			other.GetComponent<Mob> ().getHit (damage);
+		}
 	}
 }

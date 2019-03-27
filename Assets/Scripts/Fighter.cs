@@ -45,15 +45,13 @@ public class Fighter : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
-
 		if (Input.GetKeyDown (KeyCode.Space) && !specialAttack) {
 			inAction = true;
 
 		}
 
 		if (inAction) {
-			if (attackFunction (0, 1, KeyCode.Space, null, 0)) {
+			if (attackFunction (0, 1, KeyCode.Space, null, 0, true)) {
 				
 			} else {
 				inAction = false;
@@ -64,17 +62,26 @@ public class Fighter : MonoBehaviour {
 	}
 
 
-	public bool attackFunction(int stunSeconds, double scaledDamage, KeyCode key, GameObject particleEffect, int projectile){
+	public bool attackFunction(int stunSeconds, double scaledDamage, KeyCode key, GameObject particleEffect, int projectile, bool opponentBased){
 
-		if (Input.GetKey (key) && inRange()) {
-			animations.CrossFade (attack.name);
-			ClickToMove.attack = true;
-			if (opponent != null) {
-				transform.LookAt (opponent.transform.position);
+		if (opponentBased) {
+			if (Input.GetKey (key) && inRange ()) {
+				animations.CrossFade (attack.name);
+				ClickToMove.attack = true;
+				if (opponent != null) {
+					transform.LookAt (opponent.transform.position);
+
+				}
+			}
+		} else {
+			if (Input.GetKey (key)) {
+				animations.Play (attack.name);
+				ClickToMove.attack = true;
+				transform.LookAt (ClickToMove.cursorPosition);
 
 			}
 		}
-
+			
 		if (animations[attack.name].time > 0.9 * animations[attack.name].length) {
 			ClickToMove.attack = false;
 			impacted = false;
@@ -86,7 +93,7 @@ public class Fighter : MonoBehaviour {
 			return false;
 
 		}
-		impact (stunSeconds, scaledDamage, particleEffect, projectile);
+		impact (stunSeconds, scaledDamage, particleEffect, projectile, opponentBased);
 		return true;
 	}
 
@@ -100,23 +107,27 @@ public class Fighter : MonoBehaviour {
 	}
 
 
-	void impact(int stunSeconds, double scaledDamage, GameObject particleEffect, int projectile){
-		if (opponent != null && animations.IsPlaying (attack.name) && !impacted) {
+	void impact(int stunSeconds, double scaledDamage, GameObject particleEffect, int projectile, bool opponentBased){
+		if (!opponentBased || opponent != null && animations.IsPlaying (attack.name) && !impacted) {
 			if(animations[attack.name].time > animations[attack.name].length * impactLength &&
 				(animations[attack.name].time < 0.9 * animations[attack.name].length)){
 				countDown = combatEscapeTime;
 				CancelInvoke ("combatEscapeCountDown");
 				InvokeRepeating ("combatEscapeCountDown", 0, 1);
-				opponent.GetComponent<Mob> ().getHit (damage * scaledDamage);
-				opponent.GetComponent<Mob> ().getStun (stunSeconds);
 
+				if (opponentBased) {
+					opponent.GetComponent<Mob> ().getHit (damage * scaledDamage);
+					opponent.GetComponent<Mob> ().getStun (stunSeconds);
+				}
+					
 				//send out spheres
+				Quaternion rot = transform.rotation;
+				rot.x = 0f;
+				rot.z = 0f;
+
 				if (projectile > 0) {
 					//shoot projectiles
-					Debug.Log (transform.rotation);
-					Instantiate(Resources.Load("Projectile"), transform.position, transform.rotation);
-		
-
+					Instantiate(Resources.Load("Projectile"), new Vector3(transform.position.x, transform.position.y + 1.5f, transform.position.z), rot);
 				}
 
 				//send particles

@@ -11,6 +11,7 @@ public class SpecialAttack : MonoBehaviour {
 	public bool inAction;
 	public GameObject particleEffect;
 	public int projectile;
+	public bool opponentBased;
 
 	// Use this for initialization
 	void Start () {
@@ -28,9 +29,8 @@ public class SpecialAttack : MonoBehaviour {
 		}
 
 		if (inAction) {
-			if (player.attackFunction (stunTime, damagePercentage, key, particleEffect, projectile)) {
-
-
+			if (player.attackFunction (stunTime, damagePercentage, key, particleEffect, projectile, opponentBased)) {
+				
 			} else {
 				inAction = false;
 

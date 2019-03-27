@@ -129,7 +129,6 @@ public class Mob : MonoBehaviour {
 
 	void stunCountDown(){
 		stunTime = stunTime - 1;
-		Debug.Log (stunTime);
 		if (stunTime <= 0) {
 			CancelInvoke("stunCountDown");
 

@@ -11,16 +11,21 @@ public class Inventory : MonoBehaviour {
 	int slotWidthSize = 10;
 	int slotHeightSize = 6;
 	public Slot[,] slots;
+
 	public int slotX, slotY;
 	public int width = 29;
 	public int height = 29;
 
+	private bool test;
+
 
 	// Use this for initialization
 	void Start () {
+		
 		setSlots ();
-		addItem (0,0,Items.armor[0]);
-		addItem (1,1,Items.armor[0]);
+		test = false;
+
+
 	}
 
 
@@ -36,9 +41,20 @@ public class Inventory : MonoBehaviour {
 	}
 
 
+	void testMethod(){
+		addItem (0,0,Items.armor[0]);
+		addItem (1,1,Items.armor[0]);
+		test = true;
+	}
+
+
 	// Update is called once per frame
 	void Update () {
-		setSlots ();
+
+		if (!test) {
+			testMethod ();
+		}
+
 	}
 
 
@@ -46,6 +62,7 @@ public class Inventory : MonoBehaviour {
 
 		drawInventory ();
 		drawSlots ();
+		drawItems ();
 	}
 
 
@@ -55,6 +72,17 @@ public class Inventory : MonoBehaviour {
 			for (int y = 0; y < slotHeightSize; y++) {
 				slots [x, y].draw(position.x, position.y);
 			}
+		}
+	}
+
+
+	void drawItems(){
+		for (int count = 0; count < items.Count; count++) {
+			GUI.DrawTexture(new Rect(slotX + position.x + items[count].x * width, 
+									 slotY + position.y + items[count].y * height, 
+													      items[count].width * width, 
+									     				  items[count].height * height), 
+														  items[count].image);
 		}
 	}
 

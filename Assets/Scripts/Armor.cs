@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Armor :Item {
+[System.Serializable]
+public class Armor : Item {
 
 	public override void performAction(){
 		

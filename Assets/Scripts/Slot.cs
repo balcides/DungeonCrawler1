@@ -9,15 +9,16 @@ public class Slot {
 	public bool occupied;
 	public Rect position;
 
-	public Texture2D test;
+	public static Texture2D test;
 
-	//public Slot(Rect position = null){
-	public Slot(){
-
-
+	public Slot(Rect position){
+		this.position = position;
 	}
 
-	void draw(){
-		GUI.DrawTexture (position, item.image);
+	public void draw(float frameX, float frameY){
+		if (item != null) {
+			GUI.DrawTexture (new Rect (frameX + position.x, frameY + position.y, position.width, position.height), item.image);
+		}
+
 	}
 }

@@ -66,6 +66,7 @@
      <Compile Include="Assets\Scripts\Fighter.cs" />
      <Compile Include="Assets\Scripts\Inventory.cs" />
      <Compile Include="Assets\Scripts\Item.cs" />
+     <Compile Include="Assets\Scripts\Items.cs" />
      <Compile Include="Assets\Scripts\LevelSystem.cs" />
      <Compile Include="Assets\Scripts\Mob.cs" />
      <Compile Include="Assets\Scripts\ObjectPooling\Movement.cs" />

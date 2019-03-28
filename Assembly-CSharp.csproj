@@ -59,10 +59,13 @@
      <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Util.cs" />
      <Compile Include="Assets\ProCore\ProGrids\MonoBehaviour\pg_IgnoreSnap.cs" />
      <Compile Include="Assets\Scripts\ActionBar.cs" />
+     <Compile Include="Assets\Scripts\Armor.cs" />
      <Compile Include="Assets\Scripts\ClickToMove.cs" />
      <Compile Include="Assets\Scripts\DataBase.cs" />
      <Compile Include="Assets\Scripts\EnemyHealth.cs" />
      <Compile Include="Assets\Scripts\Fighter.cs" />
+     <Compile Include="Assets\Scripts\Inventory.cs" />
+     <Compile Include="Assets\Scripts\Item.cs" />
      <Compile Include="Assets\Scripts\LevelSystem.cs" />
      <Compile Include="Assets\Scripts\Mob.cs" />
      <Compile Include="Assets\Scripts\ObjectPooling\Movement.cs" />
@@ -70,6 +73,7 @@
      <Compile Include="Assets\Scripts\ObjectPooling\PoolMember.cs" />
      <Compile Include="Assets\Scripts\ObjectPooling\Shoot.cs" />
      <Compile Include="Assets\Scripts\SkillSlot.cs" />
+     <Compile Include="Assets\Scripts\Slot.cs" />
      <Compile Include="Assets\Scripts\SpecialAttack.cs" />
      <Compile Include="Assets\Scripts\Strike.cs" />
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />

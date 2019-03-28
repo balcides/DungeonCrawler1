@@ -50,7 +50,7 @@ public class DataBase : MonoBehaviour {
 
 	public static void saveMobHealth(int id, int health){
 		PlayerPrefs.SetInt ("MobHealth" + id, health);
-		PlayerPrefs.DeleteKey ("MobHealth");
+
 
 	}
 
@@ -64,6 +64,6 @@ public class DataBase : MonoBehaviour {
 			return -1;
 		}
 
-		PlayerPrefs.DeleteKey ("MobHealth");
+
 	}
 }

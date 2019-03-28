@@ -13,6 +13,7 @@ public class SpecialAttack : MonoBehaviour {
 	public GameObject particleEffect;
 	public int projectile;
 	public bool opponentBased;
+	public bool activated = true;
 
 	// Use this for initialization
 	void Start () {
@@ -22,7 +23,7 @@ public class SpecialAttack : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		
-		if (Input.GetKeyDown (key) && !player.specialAttack) {
+		if (activated && Input.GetKeyDown (key) && !player.specialAttack) {
 			player.resetAttackFunction ();
 			player.specialAttack = true;
 			inAction = true;

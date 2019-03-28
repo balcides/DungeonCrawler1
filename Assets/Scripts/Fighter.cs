@@ -199,7 +199,7 @@ public class Fighter : MonoBehaviour {
 		
 
 	bool inRange(){
-		if (Vector3.Distance (opponent.transform.position, transform.position) <= range) {
+		if (opponent != null && Vector3.Distance (opponent.transform.position, transform.position) <= range) {
 			return true;
 
 		} else {

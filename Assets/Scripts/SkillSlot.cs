@@ -6,16 +6,12 @@ using UnityEngine;
 public class SkillSlot {
 
 	public SpecialAttack skill;
-	public KeyCode key;
 	public Rect position;
 
-	// Use this for initialization
-	void Start () {
+	public void setKey(KeyCode keyCode){
 		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		if (skill != null) {
+			skill.key = keyCode;
+		}
 	}
 }

@@ -9,6 +9,8 @@ public class ActionBar : MonoBehaviour {
 	public SkillSlot[] skill;
 	public float skillX, skillY, skillWidth, skillHeight, skillDistance;
 
+	int keyBindSlot = -1;
+
 
 	// Use this for initialization
 	void Start () {
@@ -26,10 +28,10 @@ public class ActionBar : MonoBehaviour {
 			skill [count].skill = attacks [count];
 		}
 
-		skill [0].key = KeyCode.Q;
-		skill [1].key = KeyCode.W;
-		skill [2].key = KeyCode.E;
-		//skill [3].key = KeyCode.R;
+		skill [0].setKey(KeyCode.Q);
+		skill [1].setKey(KeyCode.W);
+		skill [2].setKey(KeyCode.E);
+		skill [3].setKey(KeyCode.R);
 	}
 
 
@@ -51,6 +53,7 @@ public class ActionBar : MonoBehaviour {
 
 		drawActionBar ();
 		drawSkillSlots ();
+		setKeyBindings ();
 	}
 
 
@@ -66,6 +69,32 @@ public class ActionBar : MonoBehaviour {
 		for (int count = 0; count < skill.Length; count++) {
 			GUI.DrawTexture (getScreenRect(skill[count].position), skill [count].skill.picture);
 		}
+	}
+
+
+	void setKeyBindings(){
+		for (int count = 0; count < skill.Length; count++) {
+			if (Input.GetMouseButtonDown(0) && Event.current.isMouse && getScreenRect(skill [count].position).Contains (new Vector2 (Input.mousePosition.x, Screen.height - Input.mousePosition.y))) {
+
+				if (keyBindSlot == -1) {
+					keyBindSlot = count;
+					skill [keyBindSlot].skill.activated = false;
+
+				} else {
+					keyBindSlot = -1;
+
+				}
+			}
+
+		}
+
+		if (keyBindSlot != -1 && Event.current.isKey) {
+			skill [keyBindSlot].setKey(Event.current.keyCode);
+			skill [keyBindSlot].skill.activated = true;
+			keyBindSlot = -1;
+
+		}
+
 	}
 
 

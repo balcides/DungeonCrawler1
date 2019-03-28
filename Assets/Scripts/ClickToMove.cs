@@ -12,10 +12,13 @@ public class ClickToMove : MonoBehaviour {
 	public static bool attack;
 	public static bool die;
 
+	public static Vector3 currentPosition;
 	public static Vector3 cursorPosition;
 
 	// Use this for initialization
 	void Start () {
+		
+		transform.position = DataBase.readPlayerPosition ();
 		position = transform.position;
 
 	}
@@ -37,6 +40,8 @@ public class ClickToMove : MonoBehaviour {
 			moveToPosition ();
 
 		}
+
+		currentPosition = transform.position;
 	}
 
 

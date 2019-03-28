@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class Mob : MonoBehaviour {
 
+	public static int assigner;
 	public float speed;
 	public float range;
 	public Transform player;
 	public LevelSystem playerLevel;
 	private Fighter opponent;
+	public int id;
 
 	public CharacterController controller;
 	public AnimationClip die;
@@ -38,6 +40,19 @@ public class Mob : MonoBehaviour {
 
 		health = maxHealth;
 		opponent = player.GetComponent<Fighter> ();
+		assignID ();
+		int dataBaseHealth = DataBase.readMobHealth (id);
+		if (dataBaseHealth == -1) {
+		} else {
+			health = dataBaseHealth;
+
+		}
+	}
+
+
+	void assignID(){
+		this.id = assigner;
+		assigner++;
 	}
 
 
@@ -111,10 +126,13 @@ public class Mob : MonoBehaviour {
 
 	public void getHit(double damage){
 		health = health - (int)damage;
+
 		if (health < 0) {
 			health = 0;
 
 		}
+
+		DataBase.saveMobHealth (id, health);
 
 	}
 

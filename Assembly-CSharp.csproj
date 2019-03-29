@@ -73,6 +73,7 @@
      <Compile Include="Assets\Scripts\ObjectPooling\Pool.cs" />
      <Compile Include="Assets\Scripts\ObjectPooling\PoolMember.cs" />
      <Compile Include="Assets\Scripts\ObjectPooling\Shoot.cs" />
+     <Compile Include="Assets\Scripts\PhysicalItem.cs" />
      <Compile Include="Assets\Scripts\SkillSlot.cs" />
      <Compile Include="Assets\Scripts\Slot.cs" />
      <Compile Include="Assets\Scripts\SpecialAttack.cs" />

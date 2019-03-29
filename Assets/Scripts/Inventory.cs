@@ -40,7 +40,7 @@ public class Inventory : MonoBehaviour {
 
 
 	void testMethod(){
-		addItem (0,0,Items.getArmor(0));
+		//addItem (0,0,Items.getArmor(0));
 		test = true;
 	}
 
@@ -55,11 +55,15 @@ public class Inventory : MonoBehaviour {
 	}
 
 
+
+
+
 	void OnGUI(){
 		drawInventory ();
 		drawSlots ();
 		drawItems ();
 		detectGUIAction ();
+		drawTempItem ();
 	}
 
 
@@ -84,23 +88,45 @@ public class Inventory : MonoBehaviour {
 	}
 
 
-	void addItem(int x, int y, Item item){
+	void drawTempItem(){
+		if (temp != null) {
+			GUI.DrawTexture(new Rect (Input.mousePosition.x, Screen.height - Input.mousePosition.y, temp.width * width, temp.height * height), temp.image);
+
+		}
+	}
+
+
+	public bool addItems(Item item){
+		for (int x = 0; x < slotWidthSize; x++) {
+			for (int y = 0; y < slotHeightSize; y++) {
+				if(addItem(x,y, item)){
+					return true;
+
+				}
+
+			}
+		}
+		return false;
+	}
+
+
+	private bool addItem(int x, int y, Item item){
 		for (int sX = 0; sX < item.width; sX++) {
 			for (int sY = 0; sY < item.height; sY++) {
 				if (slots [x, y].occupied) {
 					Debug.Log ("breaks" + x + " , " + y);
-					return;
+					return false;
 				}
 			}
 		}
 
 		if (x + item.width > slotWidthSize) {
 			Debug.Log ("Out of X bounds");
-			return;
+			return false;
 
 		}else if (y + item.height > slotHeightSize){
 			Debug.Log ("Out of Y bounds");
-			return;
+			return false;
 
 		}
 		Debug.Log ("comes" + x + " , " + y);
@@ -115,6 +141,7 @@ public class Inventory : MonoBehaviour {
 			}
 		}
 
+		return true;
 	}
 
 
@@ -139,6 +166,7 @@ public class Inventory : MonoBehaviour {
 		}
 		items.Remove (item);
 	}
+
 
 	void detectMouseAction(){
 		for (int x = 0; x < slotWidthSize; x++) {
@@ -167,7 +195,18 @@ public class Inventory : MonoBehaviour {
 
 						//checking drag and drop coordinate
 						if (secondSelected.x != selected.x || secondSelected.y != selected.y) {
-							addItem ((int)secondSelected.x, (int)secondSelected.y, temp);
+							if (temp != null) {
+								if (addItem ((int)secondSelected.x, (int)secondSelected.y, temp)) {
+									
+								} else {
+									addItem (temp.x, temp.y, temp);
+
+								}
+								temp = null;
+							}
+						} else {
+							addItem (temp.x, temp.y, temp);
+							temp = null;
 
 						}
 					}

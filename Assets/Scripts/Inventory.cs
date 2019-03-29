@@ -16,6 +16,8 @@ public class Inventory : MonoBehaviour {
 	public int width = 29;
 	public int height = 29;
 
+	private Item temp;
+	private Vector2 selected, secondSelected;
 	private bool test;
 
 
@@ -39,7 +41,6 @@ public class Inventory : MonoBehaviour {
 
 	void testMethod(){
 		addItem (0,0,Items.getArmor(0));
-		addItem (2,0,Items.getArmor(0));
 		test = true;
 	}
 
@@ -119,12 +120,52 @@ public class Inventory : MonoBehaviour {
 
 	void detectGUIAction(){
 		if (Input.mousePosition.x > position.x && Input.mousePosition.x < position.x + position.width) {
-			if (Input.mousePosition.y > position.y && Input.mousePosition.y < position.y + position.height) {
+			if (Screen.height - Input.mousePosition.y > position.y && Screen.height - Input.mousePosition.y < position.y + position.height) {
+				detectMouseAction ();
 				ClickToMove.busy = true;
 				return;
 			}
 		}
 		ClickToMove.busy = false;
+	}
+
+
+	void detectMouseAction(){
+		for (int x = 0; x < slotWidthSize; x++) {
+			for (int y = 0; y < slotHeightSize; y++) {
+				Rect slot = new Rect (position.x + slots[x,y].position.x, position.y + slots[x,y].position.y, width, height);
+				if(slot.Contains(new Vector2(Input.mousePosition.x, Screen.height - Input.mousePosition.y))){
+					if (Event.current.isMouse && Input.GetMouseButtonDown (0)) {
+						selected.x = x;
+						selected.y = y;
+						for (int index = 0; index < items.Count; index++) {
+							for(int countX = items[index].x; countX < items[index].x + items[index].width; countX++){
+								for(int countY = items[index].y; countY < items[index].y + items[index].width; countY++){
+									if (countX == x && countY == y) {	
+										
+										temp = items [index];
+							
+									}
+								}
+							}
+						}
+						//slots [x, y].item = null;
+				
+					}else if(Event.current.isMouse && Input.GetMouseButtonUp(0)){
+						secondSelected.x = x;
+						secondSelected.y = y;
+
+						//checking drag and drop coordinate
+						if (secondSelected.x != selected.x || secondSelected.y != selected.y) {
+							addItem ((int)secondSelected.x, (int)secondSelected.y, temp);
+
+						}
+					}
+					//Debug.Log (selected + "     " + secondSelected);
+					return;
+				}
+			}
+		}
 	}
 
 

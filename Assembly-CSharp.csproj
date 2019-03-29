@@ -51,6 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\L_FG_Assets_Pack_Lite\Demo\cameraMove.cs" />
      <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Constant.cs" />
      <Compile Include="Assets\ProCore\ProGrids\Classes\pg_Enum.cs" />
      <Compile Include="Assets\ProCore\ProGrids\Classes\pg_IconUtility.cs" />
@@ -81,6 +82,7 @@
      <Compile Include="Assets\SimpleParticlePack\Scripts\ParticleTester.cs" />
      <None Include="Assets\ProCore\ProGrids\Shader\pg_GridShader.shader" />
      <None Include="Assets\ProCore\ProGrids\About\pc_AboutEntry_ProGrids.txt" />
+     <None Include="Assets\L_FG_Assets_Pack_Lite\Demo\Read me01.txt" />
      <None Include="Assets\SkeletonData\animations.txt" />
      <None Include="Assets\ProCore\ProGrids\About\changelog.txt" />
  <Reference Include="UnityEngine.UIAutomation">

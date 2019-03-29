@@ -130,6 +130,16 @@ public class Inventory : MonoBehaviour {
 	}
 
 
+	void removeItem(Item item){
+		for (int x = item.x; x < item.x + item.width; x++) {
+			for (int y = item.y; y < item.y + item.height; y++) {
+				slots [x, y].occupied = false;
+
+			}
+		}
+		items.Remove (item);
+	}
+
 	void detectMouseAction(){
 		for (int x = 0; x < slotWidthSize; x++) {
 			for (int y = 0; y < slotHeightSize; y++) {
@@ -141,15 +151,15 @@ public class Inventory : MonoBehaviour {
 						for (int index = 0; index < items.Count; index++) {
 							for(int countX = items[index].x; countX < items[index].x + items[index].width; countX++){
 								for(int countY = items[index].y; countY < items[index].y + items[index].width; countY++){
-									if (countX == x && countY == y) {	
-										
+									if (countX == x && countY == y) {
 										temp = items [index];
+										removeItem (temp);
+										return;
 							
 									}
 								}
 							}
 						}
-						//slots [x, y].item = null;
 				
 					}else if(Event.current.isMouse && Input.GetMouseButtonUp(0)){
 						secondSelected.x = x;

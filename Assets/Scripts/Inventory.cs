@@ -21,16 +21,12 @@ public class Inventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 		setSlots ();
 		test = false;
-
-
 	}
 
 
 	void setSlots(){
-
 		slots = new Slot[slotWidthSize, slotHeightSize];
 		for (int x = 0; x < slotWidthSize; x++) {
 
@@ -42,8 +38,8 @@ public class Inventory : MonoBehaviour {
 
 
 	void testMethod(){
-		addItem (0,0,Items.armor[0]);
-		addItem (1,1,Items.armor[0]);
+		addItem (0,0,Items.getArmor(0));
+		addItem (2,0,Items.getArmor(0));
 		test = true;
 	}
 
@@ -59,10 +55,10 @@ public class Inventory : MonoBehaviour {
 
 
 	void OnGUI(){
-
 		drawInventory ();
 		drawSlots ();
 		drawItems ();
+		detectGUIAction ();
 	}
 
 
@@ -78,10 +74,10 @@ public class Inventory : MonoBehaviour {
 
 	void drawItems(){
 		for (int count = 0; count < items.Count; count++) {
-			GUI.DrawTexture(new Rect(slotX + position.x + items[count].x * width, 
-									 slotY + position.y + items[count].y * height, 
-													      items[count].width * width, 
-									     				  items[count].height * height), 
+			GUI.DrawTexture(new Rect(4 + slotX + position.x + items[count].x * width, 
+									 4 + slotY + position.y + items[count].y * height, 
+													      items[count].width * width - 8, 
+									     				  items[count].height * height - 8), 
 														  items[count].image);
 		}
 	}
@@ -96,7 +92,20 @@ public class Inventory : MonoBehaviour {
 				}
 			}
 		}
+
+		if (x + item.width > slotWidthSize) {
+			Debug.Log ("Out of X bounds");
+			return;
+
+		}else if (y + item.height > slotHeightSize){
+			Debug.Log ("Out of Y bounds");
+			return;
+
+		}
 		Debug.Log ("comes" + x + " , " + y);
+
+		item.x = x;
+		item.y = y;
 		items.Add (item);
 
 		for (int sX = x; sX < item.width + x; sX++) {
@@ -108,8 +117,18 @@ public class Inventory : MonoBehaviour {
 	}
 
 
-	void drawInventory(){
+	void detectGUIAction(){
+		if (Input.mousePosition.x > position.x && Input.mousePosition.x < position.x + position.width) {
+			if (Input.mousePosition.y > position.y && Input.mousePosition.y < position.y + position.height) {
+				ClickToMove.busy = true;
+				return;
+			}
+		}
+		ClickToMove.busy = false;
+	}
 
+
+	void drawInventory(){
 		position.x = Screen.width - position.width;
 		position.y = Screen.height - position.height - Screen.height * 0.2f;
 		GUI.DrawTexture (position, image);

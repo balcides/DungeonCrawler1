@@ -15,33 +15,36 @@ public class ClickToMove : MonoBehaviour {
 	public static Vector3 currentPosition;
 	public static Vector3 cursorPosition;
 
+	public static bool busy;
+
 	// Use this for initialization
 	void Start () {
 		
 		transform.position = DataBase.readPlayerPosition ();
 		position = transform.position;
+		busy = false;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-		locateCursor ();
-		if (!attack && !die) {
+		if (!busy) {
+			locateCursor ();
+			if (!attack && !die) {
 			
-			//click to move
-			if (Input.GetMouseButton (0)) {
+				//click to move
+				if (Input.GetMouseButton (0)) {
 				
-				//locate where player clicked on the terrain
-				locatePosition ();
+					//locate where player clicked on the terrain
+					locatePosition ();
+
+				}
+				//move the player to the position
+				moveToPosition ();
 
 			}
-			//move the player to the position
-			moveToPosition ();
-
+			currentPosition = transform.position;
 		}
-
-		currentPosition = transform.position;
 	}
 
 

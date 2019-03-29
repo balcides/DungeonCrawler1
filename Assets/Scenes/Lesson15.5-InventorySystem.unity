@@ -806,6 +806,7 @@ GameObject:
   - component: {fileID: 926397856}
   - component: {fileID: 926397857}
   - component: {fileID: 926397858}
+  - component: {fileID: 926397859}
   m_Layer: 0
   m_Name: GUI
   m_TagString: Untagged
@@ -905,7 +906,23 @@ MonoBehaviour:
   slotY: 211
   width: 29
   height: 29
-  test: {fileID: 2800000, guid: 9de19a418bb354b54be7f74c034dd1e0, type: 3}
+--- !u!114 &926397859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 926397854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6222ff2085caf43e18fd7005d75f30fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  armorInspector:
+  - image: {fileID: 2800000, guid: 9de19a418bb354b54be7f74c034dd1e0, type: 3}
+    x: 0
+    y: 0
+    width: 2
+    height: 2
 --- !u!1 &1009810416
 GameObject:
   m_ObjectHideFlags: 0

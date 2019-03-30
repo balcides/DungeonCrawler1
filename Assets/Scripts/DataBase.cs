@@ -10,7 +10,7 @@ public class DataBase : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+		//PlayerPrefs.DeleteAll ();
 	}
 
 

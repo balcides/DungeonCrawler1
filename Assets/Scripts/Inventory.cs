@@ -68,11 +68,14 @@ public class Inventory : MonoBehaviour {
 		if (Input.GetKey (key) && !displayInventory && GUIwait == 0) {
 			displayInventory = true;
 			GUIwait = GUIwaitStart;
+			ClickToMove.busy = true;
 
 		} else if (Input.GetKey (key) && displayInventory && GUIwait == 0) {
 			displayInventory = false;
 			GUIwait = GUIwaitStart;
+			ClickToMove.busy = false;
 		}
+
 	}
 
 
@@ -178,7 +181,7 @@ public class Inventory : MonoBehaviour {
 
 
 	void detectGUIAction(){
-		if (Input.mousePosition.x > position.x && Input.mousePosition.x < position.x + position.width) {
+		if (Input.mousePosition.x > position.x && Input.mousePosition.x < position.x + position.width && displayInventory) {
 			if (Screen.height - Input.mousePosition.y > position.y && Screen.height - Input.mousePosition.y < position.y + position.height) {
 				detectMouseAction ();
 				ClickToMove.busy = true;

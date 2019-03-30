@@ -20,11 +20,16 @@ public class Inventory : MonoBehaviour {
 	private Vector2 selected, secondSelected;
 	private bool test;
 
+	public KeyCode key;
+	public bool displayInventory = false;
+	public float GUIwait, GUIwaitStart;
+
 
 	// Use this for initialization
 	void Start () {
 		setSlots ();
 		test = false;
+		GUIwait = 0f;
 	}
 
 
@@ -52,6 +57,22 @@ public class Inventory : MonoBehaviour {
 			testMethod ();
 		}
 
+		GUIwait -= Time.deltaTime;
+
+		if (GUIwait <= 0) {
+			GUIwait = 0;
+		}
+
+
+
+		if (Input.GetKey (key) && !displayInventory && GUIwait == 0) {
+			displayInventory = true;
+			GUIwait = GUIwaitStart;
+
+		} else if (Input.GetKey (key) && displayInventory && GUIwait == 0) {
+			displayInventory = false;
+			GUIwait = GUIwaitStart;
+		}
 	}
 
 
@@ -59,11 +80,22 @@ public class Inventory : MonoBehaviour {
 
 
 	void OnGUI(){
-		drawInventory ();
+
 		drawSlots ();
 		drawItems ();
 		detectGUIAction ();
 		drawTempItem ();
+
+
+		//on key down, activate inventory
+		if (displayInventory) {
+			drawInventory ();
+
+		} else {
+			
+
+		}
+
 	}
 
 
